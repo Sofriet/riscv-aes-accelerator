@@ -1,0 +1,10 @@
+vivado
+*.jou
+*.log
+.Xil
+NA
+*.str
+*.swp
+software/output/
+software/aes.map
+*.o
