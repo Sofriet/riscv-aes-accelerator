@@ -267,12 +267,10 @@ module cv32e40p_ex_stage
       .ex_ready_i(ex_ready_o)
   );
 
-  cv32e40p_aes_ks_unit aes_ksu_i(
-    .clk(clk), 
-    .rst_n(rst_n), 
-    .en_i(aes_key_round_expan_i), 
-    .rs1_i(alu_operand_a_i), 
-    .round_i(alu_operand_b_i[3:0]), 
+  cv32e40p_aes_ks_unit aes_ksu_i (
+    .en_i    (aes_key_round_expan_i),
+    .rs1_i   (alu_operand_a_i),
+    .round_i (alu_operand_b_i[3:0]),
     .result_o(aes_key_round_expan_result)
   );
 

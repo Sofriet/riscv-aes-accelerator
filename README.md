@@ -19,7 +19,7 @@ flowchart LR
 
 ## Results
 
-Cycles were measured with the `mcycle` counter on the FPGA, with the core at 20 MHz.
+The core runs at 20 MHz on the FPGA. Total cycles come from the cycle counter in the FPGA system, which runs from the start of the program until it writes its end-of-test marker, so they include startup and the result check. Key expansion is timed in software with the `mcycle` counter.
 
 | Version (`software/Final_codes/`) | Change | Key expansion | Total cycles | Speed-up |
 |---|---|---:|---:|---:|
@@ -29,7 +29,7 @@ Cycles were measured with the `mcycle` counter on the FPGA, with the core at 20 
 | `Builtins` | + custom instruction through the new compiler builtin | 794 | 2,890 | 23.7× |
 | `final_version` | + aggressive inlining, `-O2` and post-RA scheduling | – | **591** | **116×** |
 
-MixColumns took 85% of the original cycles. The AES instructions cut the encryption itself from 66,030 to 1,143 cycles, which left key expansion as the bottleneck. The custom instruction makes key expansion 2.7× faster, and compiler inlining and scheduling gave another 4.9×. One encryption went from 3.42 ms to 29.6 µs.
+MixColumns took 85% of the original cycles. The AES instructions cut the total from 68,429 to 4,156 cycles, and key expansion (2,135 cycles, about half of what was left) became the bottleneck. The custom instruction made key expansion 1.5× faster through inline assembly and 2.7× faster through the compiler builtin, and compiler inlining and scheduling gave another 4.9×. The whole run, encrypting one block including key expansion, went from 3.42 ms to 29.6 µs.
 
 The final design uses 235 more LUTs than the original (10,406 vs 10,171, +2.3%) and still has 26.3 ns of slack on the 50 ns clock, so it could run at about 42 MHz.
 
